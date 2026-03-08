@@ -38,7 +38,7 @@ jobs:
       working-directory: ./massage-mobile-app
       run: |
         npx cap add android || true
-        npx cap sync android --verbose
+        npx cap sync android
 
     - name: Build APK
       working-directory: ./massage-mobile-app/android
