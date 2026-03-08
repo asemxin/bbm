@@ -37,8 +37,8 @@ jobs:
     - name: Build Capacitor Android App
       working-directory: ./massage-mobile-app
       run: |
-        npx cap add android
-        npx cap sync android
+        npx cap add android || true
+        npx cap sync android --verbose
 
     - name: Build APK
       working-directory: ./massage-mobile-app/android
