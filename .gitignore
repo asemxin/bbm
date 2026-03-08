@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.exe
+*.dll
+
+# GUI / DB
+*.db
+massage_scheduler.db
+massage.db
+
+# Build temp
+build/
+dist/
+*.spec
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Capacitor / Mobile
+massage-mobile-app/dist/
+massage-mobile-app/android/
+massage-mobile-app/ios/
+.DS_Store

@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #4f46e5;      /* 靛蓝 */
+  --primary-light: #818cf8;
+  --secondary: #ec4899;    /* 粉红 */
+  --bg-color: #f3f4f6;     /* 亮灰 */
+  --surface: #ffffff;
+  --text-main: #111827;
+  --text-sub: #6b7280;
+  --border: #e5e7eb;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 隐藏滚动条但保留滚动功能 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
