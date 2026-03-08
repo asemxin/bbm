@@ -139,9 +139,10 @@ const showToast = (msg) => {
 
 const saveSettings = async () => {
   for (const tech of technicians.value) {
-    // 强制同步日期
-    tech.work_date = workDate.value
-    await saveTechnician(tech)
+    // 强制同步日期并去 Proxy 化
+    const rawTech = JSON.parse(JSON.stringify(tech))
+    rawTech.work_date = workDate.value
+    await saveTechnician(rawTech)
   }
   showToast('✅ 技师排班配置已保存')
 }
