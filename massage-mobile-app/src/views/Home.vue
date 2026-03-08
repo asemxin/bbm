@@ -77,9 +77,23 @@
                 {{ appt.customer_name }}
               </div>
               <div class="text-xs shrink-0" :class="isApptDone(appt) ? 'text-gray-400' : 'text-blue-500 font-medium'">
-                {{ appt.duration }}分钟
-              </div>
             </div>
+          </div>
+        </div>
+
+        <!-- 技师工作统计 -->
+        <div class="mt-4 pt-3 border-t border-gray-50 flex justify-between text-xs text-gray-500 bg-gray-50/50 -mx-4 -mb-4 px-4 py-3 rounded-b-2xl">
+          <div class="flex flex-col items-center">
+            <span class="text-gray-400 mb-1 scale-90">已完成</span>
+            <span class="font-bold text-gray-700">{{ getStats(tech.tech_id).doneCount }}单/{{ getStats(tech.tech_id).doneMins }}分</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-gray-400 mb-1 scale-90">待完成</span>
+            <span class="font-bold text-gray-700">{{ getStats(tech.tech_id).pendingCount }}单/{{ getStats(tech.tech_id).pendingMins }}分</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-gray-400 mb-1 scale-90">总计</span>
+            <span class="font-bold text-indigo-600">{{ getStats(tech.tech_id).totalCount }}单/{{ getStats(tech.tech_id).totalMins }}分</span>
           </div>
         </div>
 
@@ -116,7 +130,8 @@ const generateWeekDates = () => {
 }
 
 const loadData = async () => {
-  technicians.value = await getTechnicians(selectedDate.value)
+  const allTechs = await getTechnicians(selectedDate.value)
+  technicians.value = allTechs.filter(t => t.is_available)
   appointments.value = await getAppointments(selectedDate.value)
 }
 
@@ -171,6 +186,29 @@ const isTechBusyNow = (tech) => {
 
 const freeCount = computed(() => technicians.value.filter(t => !isTechBusyNow(t)).length)
 const busyCount = computed(() => technicians.value.length - freeCount.value)
+
+const getStats = (tech_id) => {
+  const appts = getTechAppointments(tech_id)
+  let doneCount = 0, doneMins = 0
+  let pendingCount = 0, pendingMins = 0
+  
+  appts.forEach(a => {
+    if (isApptDone(a)) {
+      doneCount++
+      doneMins += Number(a.duration)
+    } else {
+      pendingCount++
+      pendingMins += Number(a.duration)
+    }
+  })
+  
+  return {
+    doneCount, doneMins,
+    pendingCount, pendingMins,
+    totalCount: appts.length,
+    totalMins: doneMins + pendingMins
+  }
+}
 
 const confirmCancel = async (appt) => {
   if (isApptDone(appt)) return
