@@ -77,6 +77,8 @@
                 {{ appt.customer_name }}
               </div>
               <div class="text-xs shrink-0" :class="isApptDone(appt) ? 'text-gray-400' : 'text-blue-500 font-medium'">
+                {{ appt.duration }}分钟
+              </div>
             </div>
           </div>
         </div>
